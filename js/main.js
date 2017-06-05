@@ -5,11 +5,18 @@ var dTime = 50;
 var a = 0.00005;
 var dr = 0;
 var player = {
+<<<<<<< HEAD
 	i: 1,
 	j: 0,
 	new_i: 1,
 	new_i: 0,
 	check: 0
+=======
+	i: 6,
+	j: 0,
+	new_i: 6,
+	new_i: 0,
+>>>>>>> origin/master
 };
 $( document ).ready(function() {
 	var $canv = $('canvas');
@@ -45,7 +52,7 @@ var addArc = function(i, j, R){
             ctx.arc(0, 0, this.R-2, Math.PI/4, -Math.PI/4, true);
             ctx.stroke();
 			ctx.restore();
-			if(player.i == i && player.j == j){
+			if(player.i == j && player.j == i){
 				ctx.save();
 				ctx.fillStyle = '#BF55EC';
 				ctx.translate(this.x, this.y);
@@ -74,7 +81,7 @@ var addArc = function(i, j, R){
 				3:{di: 0, dj: 1}
 				
 			}
-			return({i: arr[o].di + player.i, j: arr[o].dj + player.j});
+			return({i: arr[o].dj + player.i, j: arr[o].di + player.j});
 		}
 	};
 };
@@ -132,6 +139,7 @@ var go = function(){
     $( document ).on('mousedown',function(e){
 	point = {x: e.pageX, y: e.pageY};
 	}).on('mouseup',function(e) {
+<<<<<<< HEAD
 		var elem = arcs.elems[player.i][player.j];
 		if(Math.abs(e.pageX - point.x) < 10 && Math.abs(e.pageY - point.y) < 10){
 			elem.o++;
@@ -156,4 +164,27 @@ var go = function(){
 			elem.clean().draw();
 		}
 	});
+=======
+		if(Math.abs(e.pageX - point.x) < 10 && Math.abs(e.pageY - point.y) < 10){
+			var elem = arcs.elems[player.i][player.j];
+			elem.o++;
+			elem.o%=6;
+			var pos = elem.direct();
+			pprint(pos);
+			var check = 0;
+			if( pos.i >= 0 &&
+				pos.j >=0 &&
+				arcs.elems[pos.i]!=null &&
+				Math.abs(arcs.elems[pos.j][pos.i].o - elem.o) == 3){
+					check = 1;
+					player.new_j = pos.j;
+					player.new_i = pos.i;
+			}
+			elem.clean().draw(check);
+		}else {
+			player.i = player.new_i;
+			player.j = player.new_j;
+		}
+});
+>>>>>>> origin/master
 };
